@@ -196,6 +196,7 @@ const RegisterForm = () => {
       });
 
       console.log("Registration successful:", response.data);
+      setSubmitSuccess(true);
       setShowSuccessToast(true);
       reset();
 
@@ -235,7 +236,7 @@ const RegisterForm = () => {
         pb: 12, // Extra bottom padding to prevent overlap with logo
         position: "relative",
         "&::before": {
-          content: '""',
+          content: submitSuccess ? 'none' : '""',
           position: "absolute",
           top: 0,
           left: 0,
@@ -270,29 +271,51 @@ const RegisterForm = () => {
    
           }}
         >
-          {/* Logo and Header */}
-          <Box sx={{ textAlign: "center", mb: 1 }}>
-            <img
-              src={nextFaceLogo}
-              alt="Next Face Logo"
-              style={{ width: 300, marginBottom: 16 }}
-            />
-         
-          </Box>
-
-          {/* Error Message */}
-          {submitError && (
-            <Alert
-              severity="error"
-              sx={{ mb: 3, borderRadius: 2 }}
-              onClose={() => setSubmitError("")}
+          {submitSuccess ? (
+            /* Thank You Message */
+            <Box
+              sx={{
+                textAlign: "center",
+                py: 6,
+              }}
             >
-              {submitError}
-            </Alert>
-          )}
+              <Typography
+                variant="h4"
+                sx={{
+                  fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                  fontWeight: 600,
+                  color: "#1d78a2",
+                  mb: 2,
+                }}
+              >
+                Thank you for registration!
+              </Typography>
+            </Box>
+          ) : (
+            <>
+              {/* Logo and Header */}
+              <Box sx={{ textAlign: "center", mb: 1 }}>
+                <img
+                  src={nextFaceLogo}
+                  alt="Next Face Logo"
+                  style={{ width: 300, marginBottom: 16 }}
+                />
+             
+              </Box>
 
-          {/* Registration Form */}
-          <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+              {/* Error Message */}
+              {submitError && (
+                <Alert
+                  severity="error"
+                  sx={{ mb: 3, borderRadius: 2 }}
+                  onClose={() => setSubmitError("")}
+                >
+                  {submitError}
+                </Alert>
+              )}
+
+              {/* Registration Form */}
+              <Box component="form" onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
               {/* First Name */}
               <Grid item size={{ xs: 12, sm: 12 }}>
@@ -932,7 +955,9 @@ const RegisterForm = () => {
 
 
             </Grid>
-          </Box>
+              </Box>
+            </>
+          )}
         </Paper>
       </Container>
 
