@@ -285,7 +285,6 @@ const RegisterForm = () => {
                   fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
                   fontWeight: 600,
                   color: "#1d78a2",
-                  mb: 2,
                 }}
               >
                 Thank you for registration!
