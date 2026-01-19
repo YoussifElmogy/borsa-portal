@@ -30,7 +30,7 @@ const theme = createTheme({
       paper: "#ffffff",
     },
     text: {
-      primary: "#000",
+      primary: "#1e1b1b",
       secondary: "#000",
     },
   },

@@ -38,7 +38,8 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import nextFaceLogo from "../assets/next-face-bo.png";
+import nextFaceLogo from "../assets/egx-logo.svg";
+import cairoImage from "../assets/cairo.png";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -49,6 +50,8 @@ const schema = yup.object().shape({
     .max(50, "First name must not exceed 50 characters"),
   middleName: yup
     .string()
+    .required("Middle name is required")
+    .min(2, "Middle name must be at least 2 characters")
     .max(50, "Middle name must not exceed 50 characters"),
   lastName: yup
     .string()
@@ -167,19 +170,28 @@ const RegisterForm = () => {
     setIsSubmitting(true);
     setSubmitError(""); // Clear any previous errors
     try {
-      const apiUrl = `https://nextface-api.onrender.com/api/portal/users/register`;
+      const apiUrl = `https://investments-api.onrender.com/api/investments`;
+
+      // Process currentInvestments: remove "Other" from array if selected
+      const processedInvestments = data.currentInvestments?.filter((investment) => investment !== "Other") || [];
+      
+      // If "Other" was selected in currentInvestments, send currentInvestmentsOther to professionOther
+      const hasOtherInvestment = data.currentInvestments?.includes("Other");
+      const professionOtherValue = data.profession === "Other" 
+        ? data.professionOther 
+        : (hasOtherInvestment ? data.currentInvestmentsOther : "");
 
       const response = await axios.post(apiUrl, {
         firstName: data.firstName,
         middleName: data.middleName || "",
         lastName: data.lastName,
         age: data.age,
-        profession: data.profession === "Other" ? data.professionOther : data.profession,
-        currentInvestments: data.currentInvestments,
-        currentInvestmentsOther: data.currentInvestments?.includes("Other") ? data.currentInvestmentsOther : "",
-        interest: data.interest,
         mobileNumber: data.mobileNumber,
-        email: data.email,
+        emailAddress: data.email,
+        profession: data.profession,
+        professionOther: professionOtherValue,
+        currentInvestments: processedInvestments,
+        mostInterestedIn: data.interest,
       });
 
       console.log("Registration successful:", response.data);
@@ -192,7 +204,15 @@ const RegisterForm = () => {
       }, 3000);
     } catch (error) {
       console.error("Registration failed:", error);
-      setSubmitError("User already registered");
+      if (error.response?.data?.message) {
+        setSubmitError(error.response.data.message);
+      } else if (error.response?.data?.error) {
+        setSubmitError(error.response.data.error);
+      } else if (error.message) {
+        setSubmitError(error.message);
+      } else {
+        setSubmitError("Registration failed. Please try again.");
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -211,6 +231,7 @@ const RegisterForm = () => {
         alignItems: "center",
         justifyContent: "center",
         py: 4,
+        pb: 12, // Extra bottom padding to prevent overlap with logo
         position: "relative",
         "&::before": {
           content: '""',
@@ -253,7 +274,7 @@ const RegisterForm = () => {
             <img
               src={nextFaceLogo}
               alt="Next Face Logo"
-              style={{ height: 60, marginBottom: 16 }}
+              style={{ width: 300, marginBottom: 16 }}
             />
          
           </Box>
@@ -913,6 +934,25 @@ const RegisterForm = () => {
           </Box>
         </Paper>
       </Container>
+
+      {/* Cairo Image - Bottom Left */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: 20,
+          left: 20,
+          zIndex: 1,
+        }}
+      >
+        <img
+          src={cairoImage}
+          alt="Cairo"
+          style={{
+            maxWidth: "200px",
+            height: "auto",
+          }}
+        />
+      </Box>
 
       {/* Success Toast */}
       <Snackbar
