@@ -40,6 +40,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import nextFaceLogo from "../assets/egx-logo.svg";
 import cairoImage from "../assets/cairo.png";
+import rightLogo from "../assets/right-logo.svg";
 
 // Validation schema
 const schema = yup.object().shape({
@@ -939,18 +940,39 @@ const RegisterForm = () => {
       <Box
         sx={{
           position: "absolute",
-          bottom: 20,
-          left: 20,
+          bottom: { xs: 10, sm: 20 },
+          left: { xs: 10, sm: 20 },
           zIndex: 1,
+          "& img": {
+            maxWidth: { xs: "170px", sm: "300px" },
+            height: "auto",
+            display: "block",
+          },
         }}
       >
         <img
           src={cairoImage}
           alt="Cairo"
-          style={{
-            maxWidth: "200px",
+        />
+      </Box>
+
+      {/* Right Logo - Bottom Right */}
+      <Box
+        sx={{
+          position: "absolute",
+          bottom: { xs: 10, sm: 20 },
+          right: { xs: 10, sm: 20 },
+          zIndex: 1,
+          "& img": {
+              maxWidth: { xs: "170px", sm: "300px" },
             height: "auto",
-          }}
+            display: "block",
+          },
+        }}
+      >
+        <img
+          src={rightLogo}
+          alt="Right Logo"
         />
       </Box>
 
