@@ -287,7 +287,7 @@ const RegisterForm = () => {
                   color: "#1d78a2",
                 }}
               >
-                Thank you for registration!
+                Thank you for registering!
               </Typography>
             </Box>
           ) : (
