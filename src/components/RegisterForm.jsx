@@ -89,7 +89,7 @@ const schema = yup.object().shape({
   mobileNumber: yup
     .string()
     .required("Mobile number is required")
-    .matches(/^[0-9]+$/, "Mobile number must contain only numbers"),
+    .matches(/^[0-9]{11}$/, "Mobile number must be exactly 11 digits"),
   email: yup
     .string()
     .required("Email is required")
@@ -127,11 +127,10 @@ const currentInvestmentsOptions = [
 
 // Interest options
 const interestOptions = [
-  "Getting started in the stock market",
-  "Growing my savings long-term",
-  "Understanding risk and managing investments",
-  "Following the market and making better decisions",
-  "Diversifying income sources",
+  "I want to buy and sell company shares myself",
+  "I want professionals to invest my money in stocks for me",
+  "I want a low-risk option to keep my money safe and liquid",
+  "I want a professional to manage all my investments for me",
 ];
 
 const RegisterForm = () => {
@@ -247,13 +246,13 @@ const RegisterForm = () => {
         },
       }}
     >
-      <Container maxWidth="sm" sx={{ position: "relative", zIndex: 1 }}>
+      <Container maxWidth="sm" sx={{ position: "relative", zIndex: 1, top: submitSuccess && "85px"  }}>
         <Paper
           elevation={10}
           sx={{
             p: { xs: 3, sm: 5 },
             borderRadius: 4,
-            backgroundColor: "rgba(255,255,255,0.5)",
+            backgroundColor: "rgba(255,255,255,0.2)",
             backdropFilter: "blur(10px)",
             boxShadow: "0 20px 40px rgba(26, 55, 65, 0.1)",
             '& .MuiInputBase-input': {
@@ -276,7 +275,8 @@ const RegisterForm = () => {
             <Box
               sx={{
                 textAlign: "center",
-                py: 6,
+                py: 3,
+               
               }}
             >
               <Typography
@@ -284,10 +284,11 @@ const RegisterForm = () => {
                 sx={{
                   fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
                   fontWeight: 600,
-                  color: "#1d78a2",
+                  color: "#f3e6e6",
+                  fontSize: { xs: "1.2rem", sm: "1.5rem" },
                 }}
               >
-                Thank you for registering!
+                Thank you for registering. We’ll be in touch via email and WhatsApp with next steps, as spots are limited and a waiting list applies.
               </Typography>
             </Box>
           ) : (
@@ -839,13 +840,14 @@ const RegisterForm = () => {
                       placeholder="Enter your mobile number"
                       type="tel"
                       onChange={(e) => {
-                        // Only allow numbers
-                        const value = e.target.value.replace(/[^0-9]/g, "");
+                        // Only allow numbers and limit to 11 digits
+                        const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 11);
                         field.onChange(value);
                       }}
                       inputProps={{
                         pattern: "[0-9]*",
                         inputMode: "numeric",
+                        maxLength: 11,
                       }}
                       error={!!errors.mobileNumber}
                       helperText={errors.mobileNumber?.message}
