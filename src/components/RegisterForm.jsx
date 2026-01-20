@@ -288,7 +288,7 @@ const RegisterForm = () => {
                   fontSize: { xs: "1.2rem", sm: "1.5rem" },
                 }}
               >
-                Thank you for registering. We’ll be in touch via email and WhatsApp with next steps, as spots are limited and a waiting list applies.
+                Thank you for registering. <br /> We’ll be in touch via email and WhatsApp with next steps, as spots are limited and a waiting list applies.
               </Typography>
             </Box>
           ) : (
