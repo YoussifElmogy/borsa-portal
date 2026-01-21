@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu, MenuItem } from '@mui/material';
-import { Language as LanguageIcon } from '@mui/icons-material';
+import { Box, Menu, MenuItem, Button } from '@mui/material';
+import { Language as LanguageIcon, ArrowDropDown } from '@mui/icons-material';
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -22,24 +22,54 @@ const LanguageSwitcher = () => {
     handleClose();
   };
 
+  const currentLanguage = i18n.language === 'en' ? 'English' : 'العربية';
+
   return (
     <>
-      <IconButton
-        onClick={handleClick}
+      <Box
         sx={{
           position: 'absolute',
           top: 20,
           right: 20,
           zIndex: 10,
-          color: '#fff',
-          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-          '&:hover': {
-            backgroundColor: 'rgba(229, 174, 68, 0.3)',
-          },
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
         }}
       >
-        <LanguageIcon />
-      </IconButton>
+        <Box
+          sx={{
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <LanguageIcon />
+        </Box>
+        <Button
+          onClick={handleClick}
+          endIcon={<ArrowDropDown />}
+          sx={{
+            color: '#fff',
+            border: '1px solid #fff',
+            borderRadius: 1,
+            textTransform: 'none',
+            padding: '4px 8px',
+            minWidth: 'auto',
+            fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+            fontSize: '0.875rem',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              borderColor: '#fff',
+            },
+            '& .MuiButton-endIcon': {
+              marginInlineStart: '4px',
+            },
+          }}
+        >
+          {currentLanguage}
+        </Button>
+      </Box>
       <Menu
         anchorEl={anchorEl}
         open={open}
