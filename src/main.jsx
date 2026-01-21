@@ -1,16 +1,24 @@
-import { StrictMode } from "react";
+import { StrictMode, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useTranslation } from "react-i18next";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "./fonts.css";
+import "./i18n";
 import App from "./App.jsx";
 
-const theme = createTheme({
+const getTheme = (language) => {
+  const isRTL = language === 'ar';
+  const fontFamily = isRTL 
+    ? '"Cairo", "Century Gothic", "Arial", "Helvetica", sans-serif'
+    : '"Century Gothic", "Arial", "Helvetica", sans-serif';
+
+  return createTheme({
   palette: {
     mode: "light",
     primary: {
@@ -35,19 +43,17 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+    fontFamily: fontFamily,
     fontWeight: 700,
     h1: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 700,
       fontSize: "3.5rem",
       lineHeight: 1.2,
       
     },
     h2: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 600,
       fontSize: "2.5rem",
       lineHeight: 1.3,
@@ -55,8 +61,7 @@ const theme = createTheme({
 
     },
     h3: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 600,
       fontSize: "2rem",
       lineHeight: 1.4,
@@ -64,8 +69,7 @@ const theme = createTheme({
 
     },
     h4: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 500,
       fontSize: "1.5rem",
       lineHeight: 1.4,
@@ -73,8 +77,7 @@ const theme = createTheme({
 
     },
     h5: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 500,
       fontSize: "1.25rem",
       lineHeight: 1.4,
@@ -82,8 +85,7 @@ const theme = createTheme({
 
     },
     h6: {
-      fontFamily:
-        '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+      fontFamily: fontFamily,
       fontWeight: 500,
       fontSize: "1rem",
       lineHeight: 1.4,
@@ -95,8 +97,7 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
             
 
         },
@@ -105,8 +106,7 @@ const theme = createTheme({
     MuiToolbar: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
             
 
         },
@@ -115,8 +115,7 @@ const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
             
 
         },
@@ -129,8 +128,7 @@ const theme = createTheme({
 
           fontWeight: 500,
           
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           padding: "10px 24px",
         },
       },
@@ -140,13 +138,11 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
         input: {
           
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
       },
     },
@@ -154,38 +150,32 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
         input: {
           
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
       },
     },
     MuiFilledInput: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
         input: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
         },
       },
     },
     MuiInput: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
         },
         input: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
         },
       },
@@ -193,8 +183,8 @@ const theme = createTheme({
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
+          fontWeight:isRTL ? 700 : 600
           
             },
       },
@@ -202,8 +192,8 @@ const theme = createTheme({
     MuiFormLabel: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
+          fontWeight:isRTL ? 700 : 600
           
         },
       },
@@ -211,8 +201,7 @@ const theme = createTheme({
     MuiFormHelperText: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
         },
       },
@@ -220,8 +209,7 @@ const theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         select: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
         },
       },
@@ -229,8 +217,7 @@ const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
               },
       },
@@ -245,8 +232,7 @@ const theme = createTheme({
           },
         },
         option: {
-          fontFamily:
-            '"Hanno Mid-Century Modern", "Roboto", "Helvetica", "Arial", sans-serif',
+          fontFamily: fontFamily,
           
         },
       },
@@ -261,15 +247,29 @@ const theme = createTheme({
       },
     },
   },
-});
+  });
+};
 
-createRoot(document.getElementById("root")).render(
-  <StrictMode>
+const ThemeWrapper = () => {
+  const { i18n } = useTranslation();
+  const [theme, setTheme] = useState(() => getTheme(i18n.language));
+
+  useEffect(() => {
+    setTheme(getTheme(i18n.language));
+  }, [i18n.language]);
+
+  return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </ThemeProvider>
+  );
+};
+
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <ThemeWrapper />
   </StrictMode>
 );

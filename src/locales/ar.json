@@ -1,0 +1,85 @@
+{
+  "form": {
+    "firstName": "الاسم الأول",
+    "middleName": "الاسم الأوسط",
+    "lastName": "اسم العائلة",
+    "age": "السن",
+    "profession": "المهنة",
+    "professionOther": "يرجى تحديد مهنتك",
+    "currentInvestments": "استثماراتك الحالية (يمكن اختيار أكثر من خيار)",
+    "currentInvestmentsOther": "يرجى تحديد استثمارك الآخر",
+    "interest": "ما الذي يهمك أكثر؟ (اختيار واحد)",
+    "mobileNumber": "رقم الموبايل",
+    "email": "البريد الإلكتروني",
+    "register": "تسجيل",
+    "registering": "جاري التسجيل...",
+    "thankYouRegistered": "شكرًا لك على التسجيل.",
+    "registrationSuccessful": "تم التسجيل بنجاح.",
+    "thankYou": "شكرًا لك على التسجيل.",
+    "thankYouMessage": "سنكون على اتصال عبر البريد الإلكتروني وواتساب مع الخطوات التالية، حيث أن الأماكن محدودة وتنطبق قائمة الانتظار."
+  },
+  "validation": {
+    "firstNameRequired": "الاسم الأول مطلوب",
+    "firstNameMin": "يجب أن يكون الاسم الأول حرفين على الأقل",
+    "firstNameMax": "يجب ألا يتجاوز الاسم الأول 50 حرفًا",
+    "middleNameRequired": "الاسم الأوسط مطلوب",
+    "middleNameMin": "يجب أن يكون الاسم الأوسط حرفين على الأقل",
+    "middleNameMax": "يجب ألا يتجاوز الاسم الأوسط 50 حرفًا",
+    "lastNameRequired": "اسم العائلة مطلوب",
+    "lastNameMin": "يجب أن يكون اسم العائلة حرفين على الأقل",
+    "lastNameMax": "يجب ألا يتجاوز اسم العائلة 50 حرفًا",
+    "ageRequired": "العمر مطلوب",
+    "professionRequired": "المهنة مطلوبة",
+    "professionOtherRequired": "يرجى تحديد مهنتك",
+    "currentInvestmentsRequired": "الاستثمارات الحالية مطلوبة",
+    "currentInvestmentsMin": "يرجى اختيار خيار استثماري واحد على الأقل",
+    "currentInvestmentsOtherRequired": "يرجى تحديد استثمارك الآخر",
+    "interestRequired": "يرجى اختيار ما تهتم به أكثر",
+    "mobileNumberRequired": "رقم الهاتف المحمول مطلوب",
+    "mobileNumberInvalid": "يجب أن يكون رقم الهاتف المحمول 11 رقمًا بالضبط",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صحيح"
+  },
+  "options": {
+    "age": {
+      "under25": "أقل من 25",
+      "25-34": "من 25 إلى 34",
+      "35-44": "من 35 إلى 44",
+      "45-54": "من 45 إلى 54",
+      "55plus": "55 فأكثر"
+    },
+    "profession": {
+      "employee": "موظف",
+      "businessOwner": "صاحب عمل / رائد أعمال",
+      "manager": "مدير / منصب إداري",
+      "independent": "مهني مستقل (طبيب، محامي، مهندس، إلخ)",
+      "student": "طالب",
+      "other": "أخرى"
+    },
+    "investments": {
+      "savingsCertificates": "شهادات ادخار",
+      "stockMarket": "البورصة",
+      "gold": "الذهب",
+      "realEstate": "العقارات",
+      "notInvesting": "لا أستثمر حاليًا",
+      "other": "أخرى"
+    },
+    "interest": {
+      "buySell": "أريد شراء وبيع أسهم الشركات بنفسي",
+      "professionalsInvest": "أريد أن يقوم المحترفون بالاستثمار في الأسهم نيابة عني",
+      "lowRisk": "أريد خيارًا منخفض المخاطر للحفاظ على أموالي مع إمكانية السحب السريع",
+      "professionalManage": "أريد أن يدير محترف كل استثماراتي نيابة عني"
+    }
+  },
+  "placeholders": {
+    "enterFirstName": "أدخل اسمك الأول",
+    "enterMiddleName": "أدخل اسمك الأوسط",
+    "enterLastName": "أدخل اسم عائلتك",
+    "enterAge": "أدخل عمرك",
+    "enterProfession": "أدخل مهنتك",
+    "enterOtherInvestment": "أدخل استثمارك الآخر",
+    "enterInterest": "أدخل اهتمامك",
+    "enterMobileNumber": "أدخل رقم هاتفك المحمول",
+    "enterEmail": "أدخل عنوان بريدك الإلكتروني"
+  }
+}

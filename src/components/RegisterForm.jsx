@@ -37,108 +37,75 @@ import {
 } from "@mui/icons-material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import axios from "axios";
 import nextFaceLogo from "../assets/egx-logo.svg";
 import cairoImage from "../assets/cairo.png";
 import rightLogo from "../assets/right-logo.svg";
+import LanguageSwitcher from "./LanguageSwitcher";
 
-// Validation schema
-const schema = yup.object().shape({
-  firstName: yup
-    .string()
-    .required("First name is required")
-    .min(2, "First name must be at least 2 characters")
-    .max(50, "First name must not exceed 50 characters"),
-  middleName: yup
-    .string()
-    .required("Middle name is required")
-    .min(2, "Middle name must be at least 2 characters")
-    .max(50, "Middle name must not exceed 50 characters"),
-  lastName: yup
-    .string()
-    .required("Last name is required")
-    .min(2, "Last name must be at least 2 characters")
-    .max(50, "Last name must not exceed 50 characters"),
-  age: yup
-    .string()
-    .required("Age is required"),
-  profession: yup
-    .string()
-    .required("Profession is required"),
-  professionOther: yup
-    .string()
-    .when("profession", {
-      is: "Other",
-      then: (schema) => schema.required("Please specify your profession"),
-      otherwise: (schema) => schema,
-    }),
-  currentInvestments: yup
-    .array()
-    .min(1, "Please select at least one investment option")
-    .required("Current investments is required"),
-  currentInvestmentsOther: yup
-    .string()
-    .when("currentInvestments", {
-      is: (investments) => investments && investments.includes("Other"),
-      then: (schema) => schema.required("Please specify your other investment"),
-      otherwise: (schema) => schema,
-    }),
-  interest: yup
-    .string()
-    .required("Please select what you are most interested in"),
-  mobileNumber: yup
-    .string()
-    .required("Mobile number is required")
-    .matches(/^[0-9]{11}$/, "Mobile number must be exactly 11 digits"),
-  email: yup
-    .string()
-    .required("Email is required")
-    .email("Please enter a valid email address"),
-});
-
-// Age options
-const ageOptions = [
-  "Under 25",
-  "25 – 34",
-  "35 – 44",
-  "45 – 54",
-  "55+",
-];
-
-// Profession options
-const professionOptions = [
-  "Employee",
-  "Business Owner / Entrepreneur",
-  "Manager / Senior Role",
-  "Independent Professional (Doctor, Lawyer, Engineer, etc.)",
-  "Student",
-  "Other",
-];
-
-// Current Investments options
-const currentInvestmentsOptions = [
-  "Savings Certificates",
-  "Stock Market",
-  "Gold",
-  "Real Estate",
-  "I do not currently invest",
-  "Other",
-];
-
-// Interest options
-const interestOptions = [
-  "I want to buy and sell company shares myself",
-  "I want professionals to invest my money in stocks for me",
-  "I want a low-risk option to keep my money safe and liquid",
-  "I want a professional to manage all my investments for me",
-];
 
 const RegisterForm = () => {
+  const { t, i18n } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const navigate = useNavigate();
+
+  // Dynamic validation schema with translations
+  const validationSchema = yup.object().shape({
+    firstName: yup
+      .string()
+      .required(t("validation.firstNameRequired"))
+      .min(2, t("validation.firstNameMin"))
+      .max(50, t("validation.firstNameMax")),
+    middleName: yup
+      .string()
+      .required(t("validation.middleNameRequired"))
+      .min(2, t("validation.middleNameMin"))
+      .max(50, t("validation.middleNameMax")),
+    lastName: yup
+      .string()
+      .required(t("validation.lastNameRequired"))
+      .min(2, t("validation.lastNameMin"))
+      .max(50, t("validation.lastNameMax")),
+    age: yup
+      .string()
+      .required(t("validation.ageRequired")),
+    profession: yup
+      .string()
+      .required(t("validation.professionRequired")),
+    professionOther: yup
+      .string()
+      .when("profession", {
+        is: t("options.profession.other"),
+        then: (schema) => schema.required(t("validation.professionOtherRequired")),
+        otherwise: (schema) => schema,
+      }),
+    currentInvestments: yup
+      .array()
+      .min(1, t("validation.currentInvestmentsMin"))
+      .required(t("validation.currentInvestmentsRequired")),
+    currentInvestmentsOther: yup
+      .string()
+      .when("currentInvestments", {
+        is: (investments) => investments && investments.includes(t("options.investments.other")),
+        then: (schema) => schema.required(t("validation.currentInvestmentsOtherRequired")),
+        otherwise: (schema) => schema,
+      }),
+    interest: yup
+      .string()
+      .required(t("validation.interestRequired")),
+    mobileNumber: yup
+      .string()
+      .required(t("validation.mobileNumberRequired"))
+      .matches(/^[0-9]{11}$/, t("validation.mobileNumberInvalid")),
+    email: yup
+      .string()
+      .required(t("validation.emailRequired"))
+      .email(t("validation.emailInvalid")),
+  });
 
   const {
     control,
@@ -147,7 +114,7 @@ const RegisterForm = () => {
     reset,
     watch,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       firstName: "",
       middleName: "",
@@ -166,20 +133,60 @@ const RegisterForm = () => {
   const profession = watch("profession");
   const currentInvestments = watch("currentInvestments");
 
+  // Options arrays with translations
+  const ageOptions = [
+    t("options.age.under25"),
+    t("options.age.25-34"),
+    t("options.age.35-44"),
+    t("options.age.45-54"),
+    t("options.age.55plus"),
+  ];
+
+  const professionOptions = [
+    t("options.profession.employee"),
+    t("options.profession.businessOwner"),
+    t("options.profession.manager"),
+    t("options.profession.independent"),
+    t("options.profession.student"),
+    t("options.profession.other"),
+  ];
+
+  const currentInvestmentsOptions = [
+    t("options.investments.savingsCertificates"),
+    t("options.investments.stockMarket"),
+    t("options.investments.gold"),
+    t("options.investments.realEstate"),
+    t("options.investments.notInvesting"),
+    t("options.investments.other"),
+  ];
+
+  const interestOptions = [
+    t("options.interest.buySell"),
+    t("options.interest.professionalsInvest"),
+    t("options.interest.lowRisk"),
+    t("options.interest.professionalManage"),
+  ];
+
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     setSubmitError(""); // Clear any previous errors
     try {
       const apiUrl = `https://investments-api.onrender.com/api/investments`;
 
+      const otherProfession = t("options.profession.other");
+      const otherInvestment = t("options.investments.other");
+
       // Process currentInvestments: remove "Other" from array if selected
-      const processedInvestments = data.currentInvestments?.filter((investment) => investment !== "Other") || [];
+      const processedInvestments = data.currentInvestments?.filter((investment) => investment !== otherInvestment) || [];
       
-      // If "Other" was selected in currentInvestments, send currentInvestmentsOther to professionOther
-      const hasOtherInvestment = data.currentInvestments?.includes("Other");
-      const professionOtherValue = data.profession === "Other" 
-        ? data.professionOther 
-        : (hasOtherInvestment ? data.currentInvestmentsOther : "");
+      // Check if "Other" was selected in currentInvestments
+      const hasOtherInvestment = data.currentInvestments?.includes(otherInvestment);
+      
+      // professionOther only when profession is "Other"
+      const professionOtherValue = data.profession === otherProfession ? data.professionOther : "";
+      
+      // currentInvestmentsOther only when "Other" is selected in investments
+      const currentInvestmentsOtherValue = hasOtherInvestment ? data.currentInvestmentsOther : "";
 
       const response = await axios.post(apiUrl, {
         firstName: data.firstName,
@@ -191,6 +198,7 @@ const RegisterForm = () => {
         profession: data.profession,
         professionOther: professionOtherValue,
         currentInvestments: processedInvestments,
+        currentInvestmentsOther: currentInvestmentsOtherValue,
         mostInterestedIn: data.interest,
       });
 
@@ -219,8 +227,11 @@ const RegisterForm = () => {
     }
   };
 
+  const isRTL = i18n.language === 'ar';
+
   return (
     <Box
+      dir={isRTL ? 'rtl' : 'ltr'}
       sx={{
         minHeight: "100vh",
         width: "100%", // ✅ full width
@@ -246,6 +257,7 @@ const RegisterForm = () => {
         },
       }}
     >
+      <LanguageSwitcher />
       <Container maxWidth="sm" sx={{ position: "relative", zIndex: 1, top: submitSuccess && "85px"  }}>
         <Paper
           elevation={10}
@@ -288,7 +300,7 @@ const RegisterForm = () => {
                   fontSize: { xs: "1.2rem", sm: "1.5rem" },
                 }}
               >
-                Thank you for registering. <br /> We’ll be in touch via email and WhatsApp with next steps, as spots are limited and a waiting list applies.
+                {t("form.thankYou")} <br /> {t("form.thankYouMessage")}
               </Typography>
             </Box>
           ) : (
@@ -326,8 +338,8 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="First Name"
-                      placeholder="Enter your first name"
+                      label={t("form.firstName")}
+                      placeholder={t("placeholders.enterFirstName")}
                       error={!!errors.firstName}
                       helperText={errors.firstName?.message}
                       InputProps={{
@@ -368,8 +380,8 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="Middle Name"
-                      placeholder="Enter your middle name"
+                      label={t("form.middleName")}
+                      placeholder={t("placeholders.enterMiddleName")}
                       error={!!errors.middleName}
                       helperText={errors.middleName?.message}
                       InputProps={{
@@ -410,8 +422,8 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="Last Name"
-                      placeholder="Enter your last name"
+                      label={t("form.lastName")}
+                      placeholder={t("placeholders.enterLastName")}
                       error={!!errors.lastName}
                       helperText={errors.lastName?.message}
                       InputProps={{
@@ -453,8 +465,8 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder="Age"
-                      label="Age"
+                      placeholder={t("form.age")}
+                      label={t("form.age")}
                       error={!!errors.age}
                       helperText={errors.age?.message}
                       InputLabelProps={{
@@ -470,7 +482,7 @@ const RegisterForm = () => {
                                 opacity: 1,
                                 fontFamily: 'Century Gothic, Arial, Helvetica, sans-serif' 
                               }}>
-                                Enter your age
+                                {t("placeholders.enterAge")}
                               </span>
                             );
                           }
@@ -526,8 +538,8 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder="Profession"
-                      label="Profession"
+                      placeholder={t("form.profession")}
+                      label={t("form.profession")}
                       error={!!errors.profession}
                       helperText={errors.profession?.message}
                       InputLabelProps={{
@@ -550,7 +562,7 @@ const RegisterForm = () => {
                                 opacity: 1,
                                 fontFamily: 'Century Gothic, Arial, Helvetica, sans-serif' 
                               }}>
-                                Enter your profession
+                                {t("placeholders.enterProfession")}
                               </span>
                             );
                           }
@@ -597,7 +609,7 @@ const RegisterForm = () => {
               </Grid>
 
               {/* Profession Other */}
-              {profession === "Other" && (
+              {profession === t("options.profession.other") && (
                 <Grid item size={{ xs: 12 }}>
                   <Controller
                     name="professionOther"
@@ -606,8 +618,8 @@ const RegisterForm = () => {
                       <TextField
                         {...field}
                         fullWidth
-                        label="Please specify your profession"
-                        placeholder="Enter your profession"
+                        label={t("form.professionOther")}
+                        placeholder={t("placeholders.enterProfession")}
                         error={!!errors.professionOther}
                         helperText={errors.professionOther?.message}
                         InputProps={{
@@ -654,7 +666,7 @@ const RegisterForm = () => {
                   }}
                 >
                   <FormLabel component="legend" sx={{ mb: 1 }}>
-                    Your Current Investments (Multiple selections allowed)
+                    {t("form.currentInvestments")}
                   </FormLabel>
                   <Controller
                     name="currentInvestments"
@@ -711,7 +723,7 @@ const RegisterForm = () => {
               </Grid>
 
               {/* Current Investments Other */}
-              {currentInvestments?.includes("Other") && (
+              {currentInvestments?.includes(t("options.investments.other")) && (
                 <Grid item size={{ xs: 12 }}>
                   <Controller
                     name="currentInvestmentsOther"
@@ -720,8 +732,8 @@ const RegisterForm = () => {
                       <TextField
                         {...field}
                         fullWidth
-                        label="Please specify your other investment"
-                        placeholder="Enter your other investment"
+                        label={t("form.currentInvestmentsOther")}
+                        placeholder={t("placeholders.enterOtherInvestment")}
                         error={!!errors.currentInvestmentsOther}
                         helperText={errors.currentInvestmentsOther?.message}
                         InputProps={{
@@ -764,8 +776,8 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder="What are you most interested in? (Select one)"
-                      label="What are you most interested in? (Select one)"
+                      placeholder={t("form.interest")}
+                      label={t("form.interest")}
                       error={!!errors.interest}
                       helperText={errors.interest?.message}
                       InputLabelProps={{
@@ -781,7 +793,7 @@ const RegisterForm = () => {
                                 opacity: 1,
                                 fontFamily: 'Century Gothic, Arial, Helvetica, sans-serif' 
                               }}>
-                                Enter your interest
+                                {t("placeholders.enterInterest")}
                               </span>
                             );
                           }
@@ -836,8 +848,10 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="Mobile Number"
-                      placeholder="Enter your mobile number"
+                      dir={isRTL ? 'rtl' : 'ltr'}
+                      textAlign={isRTL ? 'right' : 'left'}
+                      label={t("form.mobileNumber")}
+                      placeholder={t("placeholders.enterMobileNumber")}
                       type="tel"
                       onChange={(e) => {
                         // Only allow numbers and limit to 11 digits
@@ -872,6 +886,7 @@ const RegisterForm = () => {
                         "& .MuiInputBase-input::placeholder": {
                           fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
                           color: "#000",
+                          textAlign: isRTL ? 'right' : 'left',
                           opacity: 1,
                         },
                       }}
@@ -889,8 +904,8 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label="Email Address"
-                      placeholder="Enter your email address"
+                      label={t("form.email")}
+                      placeholder={t("placeholders.enterEmail")}
                       type="email"
                       error={!!errors.email}
                       helperText={errors.email?.message}
@@ -946,10 +961,10 @@ const RegisterForm = () => {
                   {isSubmitting ? (
                     <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
                       <CircularProgress size={20} color="inherit" />
-                      Registering...
+                      {t("form.registering")}
                     </Box>
                   ) : (
-                    "Register"
+                    t("form.register")
                   )}
                 </Button>
               </Grid>
@@ -1014,7 +1029,8 @@ const RegisterForm = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Registration successful!
+          {t("form.registrationSuccessful")}
+          
         </ToastAlert>
       </Snackbar>
     </Box>

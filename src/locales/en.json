@@ -1,0 +1,84 @@
+{
+  "form": {
+    "firstName": "First Name",
+    "middleName": "Middle Name",
+    "lastName": "Last Name",
+    "age": "Age",
+    "profession": "Profession",
+    "professionOther": "Please specify your profession",
+    "currentInvestments": "Your Current Investments (Multiple selections allowed)",
+    "currentInvestmentsOther": "Please specify your other investment",
+    "interest": "What are you most interested in? (Select one)",
+    "mobileNumber": "Mobile Number",
+    "email": "Email Address",
+    "register": "Register",
+    "registering": "Registering...",
+    "thankYou": "Thank you for registering.",
+    "registrationSuccessful": "Registration successful.",
+    "thankYouMessage": "We'll be in touch via email and WhatsApp with next steps, as spots are limited and a waiting list applies."
+  },
+  "validation": {
+    "firstNameRequired": "First name is required",
+    "firstNameMin": "First name must be at least 2 characters",
+    "firstNameMax": "First name must not exceed 50 characters",
+    "middleNameRequired": "Middle name is required",
+    "middleNameMin": "Middle name must be at least 2 characters",
+    "middleNameMax": "Middle name must not exceed 50 characters",
+    "lastNameRequired": "Last name is required",
+    "lastNameMin": "Last name must be at least 2 characters",
+    "lastNameMax": "Last name must not exceed 50 characters",
+    "ageRequired": "Age is required",
+    "professionRequired": "Profession is required",
+    "professionOtherRequired": "Please specify your profession",
+    "currentInvestmentsRequired": "Current investments is required",
+    "currentInvestmentsMin": "Please select at least one investment option",
+    "currentInvestmentsOtherRequired": "Please specify your other investment",
+    "interestRequired": "Please select what you are most interested in",
+    "mobileNumberRequired": "Mobile number is required",
+    "mobileNumberInvalid": "Mobile number must be exactly 11 digits",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address"
+  },
+  "options": {
+    "age": {
+      "under25": "Under 25",
+      "25-34": "25 – 34",
+      "35-44": "35 – 44",
+      "45-54": "45 – 54",
+      "55plus": "55+"
+    },
+    "profession": {
+      "employee": "Employee",
+      "businessOwner": "Business Owner / Entrepreneur",
+      "manager": "Manager / Senior Role",
+      "independent": "Independent Professional (Doctor, Lawyer, Engineer, etc.)",
+      "student": "Student",
+      "other": "Other"
+    },
+    "investments": {
+      "savingsCertificates": "Savings Certificates",
+      "stockMarket": "Stock Market",
+      "gold": "Gold",
+      "realEstate": "Real Estate",
+      "notInvesting": "I do not currently invest",
+      "other": "Other"
+    },
+    "interest": {
+      "buySell": "I want to buy and sell company shares myself",
+      "professionalsInvest": "I want professionals to invest my money in stocks for me",
+      "lowRisk": "I want a low-risk option to keep my money safe and liquid",
+      "professionalManage": "I want a professional to manage all my investments for me"
+    }
+  },
+  "placeholders": {
+    "enterFirstName": "Enter your first name",
+    "enterMiddleName": "Enter your middle name",
+    "enterLastName": "Enter your last name",
+    "enterAge": "Enter your age",
+    "enterProfession": "Enter your profession",
+    "enterOtherInvestment": "Enter your other investment",
+    "enterInterest": "Enter your interest",
+    "enterMobileNumber": "Enter your mobile number",
+    "enterEmail": "Enter your email address"
+  }
+}
