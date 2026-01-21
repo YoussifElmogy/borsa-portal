@@ -244,6 +244,7 @@ const RegisterForm = () => {
         justifyContent: "center",
         py: 4,
         pb: 12, // Extra bottom padding to prevent overlap with logo
+        pt:{xs:10,sm:4},
         position: "relative",
         "&::before": {
           content: submitSuccess ? 'none' : '""',
