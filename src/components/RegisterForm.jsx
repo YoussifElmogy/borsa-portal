@@ -1025,7 +1025,6 @@ const RegisterForm = () => {
         anchorOrigin={{ vertical: "top", horizontal: "center" }}
       >
         <ToastAlert
-          onClose={() => setShowSuccessToast(false)}
           severity="success"
           sx={{ width: "100%" }}
         >
