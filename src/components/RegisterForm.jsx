@@ -228,7 +228,6 @@ const RegisterForm = () => {
   };
 
   const isRTL = i18n.language === 'ar';
-
   return (
     <Box
       dir={isRTL ? 'rtl' : 'ltr'}
@@ -237,8 +236,9 @@ const RegisterForm = () => {
         width: "100%", // ✅ full width
         backgroundImage: `url(${registerImg})`,
         backgroundRepeat: "no-repeat",
-        backgroundSize: "cover", // ✅ makes it cover full width/height
+        backgroundSize: {xs: submitSuccess ? "200%" : "cover", md: submitSuccess ? "100%" : "cover"},// Zoom in when registration is successful
         backgroundPosition: "center", // ✅ keeps it centered
+        transition: "background-size 0.5s ease-in-out", // Smooth zoom transition
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -279,6 +279,9 @@ const RegisterForm = () => {
             },
             '& .MuiFormHelperText-root': {
               fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+            },
+            '& .MuiOutlinedInput-notchedOutline legend span': {
+              paddingRight: '10px',
             },
    
           }}
