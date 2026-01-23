@@ -89,6 +89,10 @@ const LanguageSwitcher = () => {
           },
           '& .MuiMenuItem-root': {
             fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+            whiteSpace: 'normal',
+            wordBreak: 'break-word',
+            lineHeight: 1.5,
+            padding: { xs: '12px 16px', sm: '6px 16px' },
             '&:hover': {
               backgroundColor: 'rgba(229, 174, 68, 0.1)',
             },
