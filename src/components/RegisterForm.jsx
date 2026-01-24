@@ -35,7 +35,7 @@ import {
   Business as BusinessIcon,
   Work as WorkIcon,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
@@ -132,6 +132,11 @@ const RegisterForm = () => {
 
   const profession = watch("profession");
   const currentInvestments = watch("currentInvestments");
+
+  // Reset form when language changes
+  useEffect(() => {
+    reset();
+  }, [i18n.language, reset]);
 
   // Options arrays with translations
   const ageOptions = [
