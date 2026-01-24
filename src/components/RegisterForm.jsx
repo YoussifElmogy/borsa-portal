@@ -332,7 +332,7 @@ const RegisterForm = () => {
 
               {/* Registration Form */}
               <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               {/* First Name */}
               <Grid item size={{ xs: 12, sm: 12 }}>
                 <Typography
@@ -1050,6 +1050,7 @@ const RegisterForm = () => {
                   size="large"
                   disabled={isSubmitting}
                   sx={{
+                    mt: 1,
                     py: 1.5,
                     borderRadius: 2,
                     fontSize: "1rem",
