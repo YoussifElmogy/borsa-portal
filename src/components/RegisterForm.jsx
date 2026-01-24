@@ -280,8 +280,8 @@ const RegisterForm = () => {
             '& .MuiFormHelperText-root': {
               fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
             },
-            '& .MuiOutlinedInput-notchedOutline legend span': {
-              paddingRight: '10px',
+            '& .MuiOutlinedInput-notchedOutline legend': {
+              display: 'none',
             },
    
           }}
@@ -335,6 +335,17 @@ const RegisterForm = () => {
             <Grid container spacing={3}>
               {/* First Name */}
               <Grid item size={{ xs: 12, sm: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.firstName")}
+                </Typography>
                 <Controller
                   name="firstName"
                   control={control}
@@ -342,7 +353,6 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label={t("form.firstName")}
                       placeholder={t("placeholders.enterFirstName")}
                       error={!!errors.firstName}
                       helperText={errors.firstName?.message}
@@ -377,6 +387,17 @@ const RegisterForm = () => {
 
               {/* Middle Name */}
               <Grid item size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.middleName")}
+                </Typography>
                 <Controller
                   name="middleName"
                   control={control}
@@ -384,7 +405,6 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label={t("form.middleName")}
                       placeholder={t("placeholders.enterMiddleName")}
                       error={!!errors.middleName}
                       helperText={errors.middleName?.message}
@@ -419,6 +439,17 @@ const RegisterForm = () => {
 
               {/* Last Name */}
               <Grid item size={{ xs: 12, sm: 6 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.lastName")}
+                </Typography>
                 <Controller
                   name="lastName"
                   control={control}
@@ -426,7 +457,6 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label={t("form.lastName")}
                       placeholder={t("placeholders.enterLastName")}
                       error={!!errors.lastName}
                       helperText={errors.lastName?.message}
@@ -461,6 +491,17 @@ const RegisterForm = () => {
 
               {/* Age */}
               <Grid item size={{ xs: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.age")}
+                </Typography>
                 <Controller
                   name="age"
                   control={control}
@@ -469,13 +510,9 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder={t("form.age")}
-                      label={t("form.age")}
+                      placeholder={t("placeholders.enterAge")}
                       error={!!errors.age}
                       helperText={errors.age?.message}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       SelectProps={{
                         displayEmpty: true,
                         renderValue: (selected) => {
@@ -534,6 +571,17 @@ const RegisterForm = () => {
 
               {/* Profession */}
               <Grid item size={{ xs: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.profession")}
+                </Typography>
                 <Controller
                   name="profession"
                   control={control}
@@ -542,13 +590,9 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder={t("form.profession")}
-                      label={t("form.profession")}
+                      placeholder={t("placeholders.enterProfession")}
                       error={!!errors.profession}
                       helperText={errors.profession?.message}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -619,6 +663,17 @@ const RegisterForm = () => {
               {/* Profession Other */}
               {profession === t("options.profession.other") && (
                 <Grid item size={{ xs: 12 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      mb: 1,
+                      fontSize: "0.9rem",
+                      fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {t("form.professionOther")}
+                  </Typography>
                   <Controller
                     name="professionOther"
                     control={control}
@@ -626,7 +681,6 @@ const RegisterForm = () => {
                       <TextField
                         {...field}
                         fullWidth
-                        label={t("form.professionOther")}
                         placeholder={t("placeholders.enterProfession")}
                         error={!!errors.professionOther}
                         helperText={errors.professionOther?.message}
@@ -733,6 +787,17 @@ const RegisterForm = () => {
               {/* Current Investments Other */}
               {currentInvestments?.includes(t("options.investments.other")) && (
                 <Grid item size={{ xs: 12 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      mb: 1,
+                      fontSize: "0.9rem",
+                      fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                      fontWeight: 700,
+                    }}
+                  >
+                    {t("form.currentInvestmentsOther")}
+                  </Typography>
                   <Controller
                     name="currentInvestmentsOther"
                     control={control}
@@ -740,7 +805,6 @@ const RegisterForm = () => {
                       <TextField
                         {...field}
                         fullWidth
-                        label={t("form.currentInvestmentsOther")}
                         placeholder={t("placeholders.enterOtherInvestment")}
                         error={!!errors.currentInvestmentsOther}
                         helperText={errors.currentInvestmentsOther?.message}
@@ -776,6 +840,17 @@ const RegisterForm = () => {
 
               {/* Interest */}
               <Grid item size={{ xs: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.interest")}
+                </Typography>
                 <Controller
                   name="interest"
                   control={control}
@@ -784,13 +859,9 @@ const RegisterForm = () => {
                       {...field}
                       fullWidth
                       select
-                      placeholder={t("form.interest")}
-                      label={t("form.interest")}
+                      placeholder={t("placeholders.enterInterest")}
                       error={!!errors.interest}
                       helperText={errors.interest?.message}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
                       SelectProps={{
                         displayEmpty: true,
                         renderValue: (selected) => {
@@ -853,6 +924,17 @@ const RegisterForm = () => {
 
               {/* Mobile Number */}
               <Grid item size={{ xs: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.mobileNumber")}
+                </Typography>
                 <Controller
                   name="mobileNumber"
                   control={control}
@@ -862,7 +944,6 @@ const RegisterForm = () => {
                       fullWidth
                       dir={isRTL ? 'rtl' : 'ltr'}
                       textAlign={isRTL ? 'right' : 'left'}
-                      label={t("form.mobileNumber")}
                       placeholder={t("placeholders.enterMobileNumber")}
                       type="tel"
                       onChange={(e) => {
@@ -909,6 +990,17 @@ const RegisterForm = () => {
 
               {/* Email */}
               <Grid item size={{ xs: 12 }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    mb: 1,
+                    fontSize: "0.9rem",
+                    fontFamily: '"Century Gothic", "Arial", "Helvetica", sans-serif',
+                    fontWeight: 700,
+                  }}
+                >
+                  {t("form.email")}
+                </Typography>
                 <Controller
                   name="email"
                   control={control}
@@ -916,7 +1008,6 @@ const RegisterForm = () => {
                     <TextField
                       {...field}
                       fullWidth
-                      label={t("form.email")}
                       placeholder={t("placeholders.enterEmail")}
                       type="email"
                       error={!!errors.email}
