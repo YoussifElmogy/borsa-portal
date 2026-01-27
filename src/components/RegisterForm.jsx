@@ -36,7 +36,7 @@ import {
   Work as WorkIcon,
 } from "@mui/icons-material";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import nextFaceLogo from "../assets/egx-logo.svg";
@@ -45,6 +45,19 @@ import rightLogo from "../assets/right-logo.svg";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 
+// Valid ref IDs mapping
+const VALID_REF_IDS = [
+  "SH7X9K2M4PLQ", // Sherine hamdy
+  "HR3B8N5W2JKF", // Hasem rasmy
+  "FN6C4T9R1VXZ", // Farah nofal
+  "AT2Y7H3D8MNP", // Ahmed talaat
+  "KS5L9Q4G6BWC", // Khaled el sayed
+  "AR8F2K7J3XHT", // Ahmed rashad
+  "PS4W6M9N1YRV", // POSH
+  "EX7Q3K8L2CTB", // EGX
+  "CL9P5H4D6ZJN", // COLLAB
+];
+
 const RegisterForm = () => {
   const { t, i18n } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -52,6 +65,40 @@ const RegisterForm = () => {
   const [submitError, setSubmitError] = useState("");
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Extract ref ID from pathname (e.g., /ref=SH7X9K2M4PLQ)
+  const getRefFromPath = () => {
+    const pathMatch = location.pathname.match(/^\/ref=(.+)$/);
+    return pathMatch ? pathMatch[1] : null;
+  };
+  
+  const refParam = getRefFromPath();
+
+  // Validate pathname and redirect to 404 if invalid
+  useEffect(() => {
+    const pathname = location.pathname;
+    
+    // Allow home path
+    if (pathname === "/") {
+      return;
+    }
+    
+    // Check if path matches /ref=... pattern
+    const refMatch = pathname.match(/^\/ref=(.+)$/);
+    if (refMatch) {
+      const refId = refMatch[1];
+      // If ref ID is not in valid list, redirect to 404
+      if (!VALID_REF_IDS.includes(refId)) {
+        navigate("/404", { replace: true });
+      }
+    } else {
+      // If path doesn't match / or /ref=..., redirect to 404
+      if (pathname !== "/404") {
+        navigate("/404", { replace: true });
+      }
+    }
+  }, [location.pathname, navigate]);
 
   // Dynamic validation schema with translations
   const validationSchema = yup.object().shape({
@@ -176,7 +223,11 @@ const RegisterForm = () => {
     setIsSubmitting(true);
     setSubmitError(""); // Clear any previous errors
     try {
-      const apiUrl = `https://investments-api.onrender.com/api/investments`;
+      // Build API URL with ref parameter if it exists
+      let apiUrl = `https://investments-api.onrender.com/api/investments`;
+      if (refParam && VALID_REF_IDS.includes(refParam)) {
+        apiUrl += `?ref=${refParam}`;
+      }
 
       const otherProfession = t("options.profession.other");
       const otherInvestment = t("options.investments.other");
@@ -218,6 +269,11 @@ const RegisterForm = () => {
       }, 3000);
     } catch (error) {
       console.error("Registration failed:", error);
+      // If API returns 404, redirect to 404 page
+      if (error.response?.status === 404) {
+        navigate("/404");
+        return;
+      }
       if (error.response?.data?.message) {
         setSubmitError(error.response.data.message);
       } else if (error.response?.data?.error) {
