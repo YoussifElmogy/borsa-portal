@@ -375,7 +375,7 @@ const RegisterForm = () => {
                 <img
                   src={nextFaceLogo}
                   alt="Next Face Logo"
-                  style={{ width: '100%', marginBottom: 16 }}
+                  style={{ width: '100%', marginBottom: 16, borderRadius: 10 }}
                 />
              
               </Box>
