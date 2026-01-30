@@ -39,7 +39,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-import nextFaceLogo from "../assets/egx-logo.svg";
+import nextFaceLogo from "../assets/guest-bg.jpeg";
 import cairoImage from "../assets/cairo.png";
 import rightLogo from "../assets/right-logo.svg";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -375,7 +375,7 @@ const RegisterForm = () => {
                 <img
                   src={nextFaceLogo}
                   alt="Next Face Logo"
-                  style={{ width: 300, marginBottom: 16 }}
+                  style={{ width: '100%', marginBottom: 16 }}
                 />
              
               </Box>
